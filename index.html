@@ -1,3 +1,18 @@
+# 1. 创建项目 (项目名: traditionova-dao)
+npm create vite@latest traditionova-dao -- --template react
+
+# 2. 进入目录
+cd traditionova-dao
+
+# 3. 安装依赖
+npm install
+
+# 4. 安装 Tailwind CSS (样式必需)
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+
+# 5. 安装图标库 (代码中用到了 lucide-react)
+npm install lucide-react
 import React, { useEffect, useState } from 'react';
 import { ArrowUpRight, Globe, Layers, Leaf, Mountain, ChevronDown, Hexagon, Twitter, MessageCircle, Send, Users, Sparkles, Anchor, ShieldCheck } from 'lucide-react';
 
