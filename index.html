@@ -1,0 +1,409 @@
+import React, { useEffect, useState } from 'react';
+import { ArrowUpRight, Globe, Layers, Leaf, Mountain, ChevronDown, Hexagon, Twitter, MessageCircle, Send, Users, Sparkles, Anchor, ShieldCheck } from 'lucide-react';
+
+/**
+ * TraditioNova DAO - Concept Website
+ * Producer: LKJ
+ * Theme: Neo-Oriental Minimalism & Web3 Investment
+ * Version: 3.1 (Fixes & Optimization)
+ */
+
+const TraditioNova = () => {
+  const [scrolled, setScrolled] = useState(false);
+
+  // Scroll listener
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollTo = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const daoMembers = [
+    { name: "Ruby", role: "Core Member", twitter: "https://x.com/Rubywang", handle: "Rubywang" },
+    { name: "Star", role: "Core Member", twitter: "https://x.com/starzq", handle: "starzq" },
+    { name: "Mable", role: "Core Member", twitter: "https://x.com/mablejiang", handle: "mablejiang" },
+    { name: "Yinghao", role: "Core Member", twitter: "https://x.com/linsajiao", handle: "linsajiao" },
+    { name: "LKJ", role: "Producer", twitter: "https://x.com/Shadlendid_TN", handle: "Shadlendid_TN" },
+    { name: "Renee", role: "Core Member", twitter: "https://x.com/Renee7eth", handle: "Renee7eth" },
+    { name: "Robotchi", role: "Core Member", twitter: "https://x.com/PlatypusToMoon", handle: "PlatypusToMoon" },
+    { name: "欧阳", role: "Core Member", twitter: "https://x.com/seanmonkey", handle: "seanmonkey" },
+    { name: "慕徊", role: "Core Member", twitter: "https://x.com/Jer_NFTworld", handle: "Jer_NFTworld" },
+    { name: "Wang Chao", role: "Core Member", twitter: "https://x.com/chaowxyz", handle: "chaowxyz" },
+  ];
+
+  return (
+    <div className="min-h-screen bg-[#FDFBF7] text-[#2C2420] font-sans selection:bg-[#B89E80] selection:text-white overflow-x-hidden">
+      {/* Dynamic Font Loading */}
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Noto+Serif+SC:wght@300;400;500;700&family=Inter:wght@300;400;500&display=swap');
+        
+        .font-serif-en { font-family: 'Cinzel', serif; }
+        .font-serif-cn { font-family: 'Noto Serif SC', serif; }
+        .font-sans-std { font-family: 'Inter', sans-serif; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #FDFBF7; }
+        ::-webkit-scrollbar-thumb { background: #D4C5B0; border-radius: 3px; }
+      `}</style>
+
+      {/* Navigation */}
+      <nav className={`fixed top-0 w-full z-40 px-6 md:px-12 py-6 flex justify-between items-center transition-all duration-500 ${scrolled ? 'bg-[#FDFBF7]/95 backdrop-blur-md border-b border-[#2C2420]/5' : 'bg-transparent'}`}>
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 border border-[#2C2420] rotate-45 flex items-center justify-center">
+            <span className="font-serif-en text-xs -rotate-45">TN</span>
+          </div>
+          <span className="font-serif-en tracking-widest text-sm md:text-base font-medium">TRADITIONOVA</span>
+        </div>
+        
+        <div className="hidden md:flex gap-8 text-xs tracking-[0.2em] font-sans-std text-[#2C2420]/60">
+          {['VISION', 'INVESTMENT', 'PORTFOLIO', 'DAO', 'MEMBERS'].map((item) => (
+            <button key={item} onClick={() => scrollTo(item.toLowerCase())} className="hover:text-[#B89E80] transition-colors relative group">
+              {item}
+              <span className="absolute -bottom-1 left-1/2 w-0 h-[1px] bg-[#B89E80] transition-all group-hover:w-full group-hover:left-0"></span>
+            </button>
+          ))}
+        </div>
+
+        <button className="px-6 py-2 border border-[#2C2420] text-xs tracking-widest hover:bg-[#2C2420] hover:text-[#FDFBF7] transition-all duration-300">
+          JOIN DAO
+        </button>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 pt-20">
+        <div className="absolute top-0 right-12 h-screen w-[1px] bg-[#2C2420]/5 hidden md:block"></div>
+        <div className="absolute top-0 left-12 h-screen w-[1px] bg-[#2C2420]/5 hidden md:block"></div>
+        
+        <div className="max-w-6xl mx-auto w-full relative z-10">
+          <div className="mb-4 flex items-center gap-4 animate-fade-in opacity-0" style={{animation: 'fadeIn 1s forwards 0.2s'}}>
+            <span className="h-[1px] w-12 bg-[#B89E80]"></span>
+            <span className="font-sans-std text-xs tracking-[0.2em] text-[#B89E80] uppercase">Web3 Investment DAO</span>
+          </div>
+          
+          <h1 className="font-serif-en text-5xl md:text-7xl lg:text-9xl leading-[0.9] text-[#2C2420] mb-8 opacity-0" style={{animation: 'slideUp 1s forwards 0.5s'}}>
+            Make Every <br/>
+            <span className="italic font-serif-cn text-[#B89E80]">Investment</span> Count
+          </h1>
+          
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-12 mt-12 opacity-0" style={{animation: 'fadeIn 1s forwards 1s'}}>
+            <p className="font-serif-cn text-xl md:text-2xl text-[#2C2420]/80 max-w-lg leading-relaxed">
+              每一笔投资，都应该让社会更好。<br/>
+              <span className="text-sm text-[#2C2420]/40 font-sans-std mt-2 block tracking-wide">For Society. For Future.</span>
+            </p>
+            
+            <div className="flex flex-col gap-2 text-right">
+               <div className="text-xs tracking-widest text-[#2C2420]/40 uppercase mb-2">Producer</div>
+               <div className="font-serif-en text-lg border-b border-[#2C2420] pb-1">LKJ</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 animate-bounce cursor-pointer" onClick={() => scrollTo('vision')}>
+          <ChevronDown className="w-5 h-5 text-[#2C2420]/40" />
+        </div>
+      </section>
+
+      {/* Vision Section */}
+      <section id="vision" className="py-32 px-6 md:px-12 bg-[#2C2420] text-[#FDFBF7] relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] border-[40px] border-[#FDFBF7]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+
+        <div className="max-w-6xl mx-auto relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
+            <div>
+               <h2 className="font-serif-en text-4xl md:text-5xl mb-8">SYMB<br/><span className="text-[#B89E80] italic">IOSIS</span></h2>
+               <div className="w-16 h-[1px] bg-[#FDFBF7]/20 mb-8"></div>
+               <p className="font-serif-cn text-lg leading-loose text-[#FDFBF7]/80">
+                 坚持东方文化所代表的“共生”世界观，深入结合 Web3 新工具，成为连接传统价值与创新资本的投资 DAO。共建、投资并赋能善能企业，最终推动人类文明向前发展，生生不息。
+               </p>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-4">
+               {[
+                 { num: "01", title: "东方审美", desc: "Oriental Renaissance" },
+                 { num: "02", title: "Web3 RWA", desc: "Asset Digitization" },
+                 { num: "03", title: "善能企业", desc: "Good Energy Ent." },
+               ].map((item) => (
+                 <div key={item.num} className="p-8 border border-[#FDFBF7]/10 hover:bg-[#FDFBF7]/5 transition-colors group">
+                    <div className="font-serif-en text-[#B89E80] mb-4">{item.num}</div>
+                    <h3 className="font-serif-cn text-xl mb-2">{item.title}</h3>
+                    <p className="font-sans-std text-xs text-[#FDFBF7]/40 uppercase tracking-wide">{item.desc}</p>
+                 </div>
+               ))}
+               <div className="p-8 bg-[#B89E80] text-[#2C2420] flex items-center justify-center">
+                  <span className="font-serif-en text-4xl rotate-90 md:rotate-0">TN</span>
+               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Investment Focus Section */}
+      <section id="investment" className="py-32 px-6 md:px-12 relative">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-24">
+            <span className="font-sans-std text-xs tracking-[0.3em] uppercase text-[#B89E80] mb-4 block">Our Focus</span>
+            <h2 className="font-serif-cn text-4xl md:text-5xl text-[#2C2420]">议题驱动 · 善能投资</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#2C2420]/10 border border-[#2C2420]/10">
+            {[
+              { icon: <Mountain className="w-6 h-6"/>, title: "文化保护", desc: "汉文化传承、敦煌保护、寺院文化", tags: ["Heritage", "Culture"] },
+              { icon: <Layers className="w-6 h-6"/>, title: "城市更新", desc: "文化内容结合的新一代空间解决方案", tags: ["Space", "Renewal"] },
+              { icon: <Leaf className="w-6 h-6"/>, title: "乡村振兴", desc: "在地文化催化中心，农产品+文化模式", tags: ["Rural", "Eco"] },
+              { icon: <Hexagon className="w-6 h-6"/>, title: "3D 复原", desc: "馆藏文物数字化，双目视觉芯片", tags: ["Tech", "Digital"] },
+              { icon: <Globe className="w-6 h-6"/>, title: "VR 科技", desc: "文化内容的大空间 VR 落地应用", tags: ["Virtual", "Future"] },
+              { icon: <ArrowUpRight className="w-6 h-6"/>, title: "主动健康", desc: "全球化主动健康管理平台", tags: ["Health", "Life"] },
+            ].map((item, idx) => (
+              <div key={idx} className="bg-[#FDFBF7] p-10 hover:bg-[#F6F1EB] transition-colors group cursor-pointer relative overflow-hidden">
+                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-2 group-hover:translate-x-0">
+                  <ArrowUpRight className="w-5 h-5 text-[#B89E80]" />
+                </div>
+                <div className="text-[#2C2420]/40 mb-6 group-hover:text-[#B89E80] transition-colors">{item.icon}</div>
+                <h3 className="font-serif-cn text-xl font-medium mb-3">{item.title}</h3>
+                <p className="font-sans-std text-sm text-[#2C2420]/60 leading-relaxed mb-6">{item.desc}</p>
+                <div className="flex gap-2">
+                  {item.tags.map(tag => (
+                    <span key={tag} className="text-[10px] uppercase tracking-wider border border-[#2C2420]/10 px-2 py-1 text-[#2C2420]/40">{tag}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Portfolio Section (HUASURGE) */}
+      <section id="portfolio" className="py-32 px-6 md:px-12 bg-[#1A1817] text-[#EAE6DF]">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-white/10 pb-8">
+            <div>
+              <div className="text-[#B89E80] font-serif-en text-sm tracking-widest mb-2">CORE ASSET · CASE 01</div>
+              <h2 className="font-serif-en text-5xl md:text-6xl mb-2">HUASURGE</h2>
+              <div className="flex items-center gap-3 text-white/40">
+                <span className="font-serif-cn text-lg">底层资产: 织造司</span>
+                <span className="h-[1px] w-8 bg-white/20"></span>
+                <span className="font-serif-en text-sm italic">ZHIZAO SI</span>
+              </div>
+            </div>
+            <div className="text-right mt-8 md:mt-0">
+               <div className="text-3xl md:text-4xl font-serif-en text-[#B89E80]">TOP 1</div>
+               <div className="text-xs text-white/40 uppercase tracking-widest mt-1">Taobao Hanfu Category</div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
+            {/* Image Area - Using Unsplash Image */}
+            <div className="md:col-span-7 h-[400px] md:h-[600px] relative overflow-hidden group">
+              <img 
+                src="https://images.unsplash.com/photo-1620658826622-4416043d9b4b?q=80&w=2000&auto=format&fit=crop" 
+                alt="Oriental Silk Texture" 
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-80"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1A1817] via-transparent to-transparent"></div>
+              
+              <div className="absolute inset-0 flex items-center justify-center">
+                 <span className="font-serif-cn text-4xl text-white/90 drop-shadow-md group-hover:tracking-widest transition-all duration-700">锦 · 绣 · 罗</span>
+              </div>
+              
+              {/* Floating Card */}
+              <div className="absolute bottom-8 left-8 bg-[#FDFBF7]/10 backdrop-blur-md p-6 border border-white/10 max-w-xs">
+                 <p className="font-serif-cn text-sm leading-relaxed text-white/90">
+                   致力以当代纺织科技复原华夏千年丝织工艺。
+                 </p>
+              </div>
+            </div>
+
+            {/* Data Area */}
+            <div className="md:col-span-5 flex flex-col justify-center space-y-12">
+               <div>
+                 <h3 className="font-serif-cn text-2xl mb-4 text-[#B89E80]">投资亮点</h3>
+                 <p className="text-white/60 font-sans-std text-sm leading-7">
+                   汉文化细分赛道头部公司，业务稳定，财务健康。2023年入选福布斯中国新锐品牌 TOP100。
+                   <br/>复原云锦工艺，售出50万+条仿妆花马面裙。
+                 </p>
+               </div>
+
+               <div className="space-y-6">
+                 <div className="flex justify-between items-center border-b border-white/10 pb-4">
+                    <span className="text-white/40 text-sm">Web3 轮次释放</span>
+                    <span className="font-serif-en text-xl">2% - 3%</span>
+                 </div>
+                 <div className="flex justify-between items-center border-b border-white/10 pb-4">
+                    <span className="text-white/40 text-sm">TGE 估值</span>
+                    <span className="font-serif-en text-xl">$12,000,000</span>
+                 </div>
+                 <div className="flex justify-between items-center border-b border-white/10 pb-4">
+                    <span className="text-white/40 text-sm">资产类型</span>
+                    <span className="font-serif-cn text-lg">股权 + RWA NFT</span>
+                 </div>
+               </div>
+
+               <button className="self-start px-8 py-3 border border-[#B89E80] text-[#B89E80] text-xs tracking-[0.2em] hover:bg-[#B89E80] hover:text-[#1A1817] transition-all">
+                 VIEW INVESTMENT DECK
+               </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* DAO Section */}
+      <section id="dao" className="py-32 px-6 md:px-12 bg-[#FDFBF7]">
+        <div className="max-w-6xl mx-auto text-center">
+           <div className="mb-20">
+             <span className="font-sans-std text-xs tracking-[0.3em] uppercase text-[#B89E80] mb-4 block">Core Advantages</span>
+             <h2 className="font-serif-cn text-4xl mb-6 text-[#2C2420]">核心优势</h2>
+             <p className="font-sans-std text-gray-500 max-w-xl mx-auto">
+               链接传统价值与创新资本，构建独一无二的文化投资生态。
+             </p>
+           </div>
+
+           {/* 4 Core Advantages Grid */}
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left mb-20">
+              {[
+                { 
+                  icon: <Sparkles className="w-6 h-6"/>, 
+                  title: "议题驱动", 
+                  desc: "主动发起文物保护、环保等议题，基于“投资向善”的大前提，让每笔投资都推动社会进步。" 
+                },
+                { 
+                  icon: <Anchor className="w-6 h-6"/>, 
+                  title: "信息优势", 
+                  desc: "DAO 成员拥有更前沿认知，通过 TraditioNova 掌握产业上下游并购等核心信息优势。" 
+                },
+                { 
+                  icon: <Users className="w-6 h-6"/>, 
+                  title: "网络价值", 
+                  desc: "由文化践行者与创新投资者组成的优质网络，链接更多善能企业，共享生态价值。" 
+                },
+                { 
+                  icon: <ShieldCheck className="w-6 h-6"/>, 
+                  title: "门槛优势", 
+                  desc: "相较于 Web2 传统投资，大幅降低资金门槛，让 Web3 群体深度参与优质实业投资。" 
+                }
+              ].map((item, idx) => (
+                <div key={idx} className="p-8 bg-white border border-[#2C2420]/5 hover:border-[#B89E80] transition-colors group h-full flex flex-col">
+                   <div className="w-10 h-10 bg-[#FDFBF7] text-[#2C2420] border border-[#2C2420]/10 flex items-center justify-center mb-6 group-hover:bg-[#B89E80] group-hover:text-white group-hover:border-transparent transition-colors">
+                     {item.icon}
+                   </div>
+                   <h3 className="font-serif-cn text-lg mb-4 text-[#2C2420]">{item.title}</h3>
+                   <p className="text-xs text-gray-500 leading-relaxed font-sans-std">{item.desc}</p>
+                </div>
+              ))}
+           </div>
+        </div>
+      </section>
+
+      {/* NEW: DAO Members Section */}
+      <section id="members" className="py-24 px-6 md:px-12 bg-white border-t border-[#2C2420]/5">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex justify-between items-end mb-12">
+             <h2 className="font-serif-cn text-3xl text-[#2C2420]">DAO 核心成员</h2>
+             <span className="font-sans-std text-xs tracking-widest text-[#B89E80]">CORE CONTRIBUTORS</span>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-8 gap-y-12">
+             {daoMembers.map((member, index) => (
+               <div key={index} className="group flex flex-col items-center text-center">
+                  <div className="w-full aspect-square bg-[#FDFBF7] mb-4 flex items-center justify-center border border-[#2C2420]/5 group-hover:border-[#B89E80] transition-colors overflow-hidden relative">
+                     {/* Avatar Image using unavatar.io */}
+                     <img 
+                       src={`https://unavatar.io/twitter/${member.handle}`} 
+                       alt={member.name}
+                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                       onError={(e) => {
+                         e.target.onerror = null; 
+                         e.target.style.display = 'none'; // Hide if fails
+                         e.target.nextSibling.style.display = 'flex'; // Show fallback
+                       }}
+                     />
+                     {/* Fallback Initial (Hidden by default unless error) */}
+                     <div className="absolute inset-0 hidden items-center justify-center bg-[#FDFBF7]">
+                        <span className="font-serif-en text-2xl text-[#2C2420]/20">
+                          {member.name.charAt(0)}
+                        </span>
+                     </div>
+                  </div>
+                  
+                  <h4 className="font-serif-cn text-lg text-[#2C2420] mb-1">{member.name}</h4>
+                  <div className="flex flex-col items-center gap-2">
+                    <span className="text-[10px] uppercase tracking-wider text-[#2C2420]/40">{member.role}</span>
+                    <a href={member.twitter} target="_blank" rel="noopener noreferrer" className="text-[#2C2420]/20 hover:text-[#1DA1F2] transition-colors p-2" title={`@${member.handle}`}>
+                       <Twitter size={14} />
+                    </a>
+                  </div>
+               </div>
+             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-[#2C2420] text-[#FDFBF7] pt-24 pb-12 px-6 md:px-12">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
+          
+          <div className="max-w-sm">
+             <div className="flex items-center gap-3 mb-6">
+               <div className="w-6 h-6 border border-[#B89E80] rotate-45 flex items-center justify-center">
+                 <span className="font-serif-en text-[10px] -rotate-45 text-[#B89E80]">TN</span>
+               </div>
+               <span className="font-serif-en tracking-widest text-sm">TRADITIONOVA</span>
+             </div>
+             <p className="font-serif-cn text-sm text-white/60 mb-8">
+               成为连接传统价值与创新资本的投资 DAO。<br/>
+               推动人类文明向前发展，生生不息。
+             </p>
+             <div className="flex gap-4">
+                <a href="#" className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-[#B89E80] hover:border-[#B89E80] hover:text-[#2C2420] transition-all">
+                  <Twitter size={16} />
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-[#B89E80] hover:border-[#B89E80] hover:text-[#2C2420] transition-all">
+                  <MessageCircle size={16} />
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-[#B89E80] hover:border-[#B89E80] hover:text-[#2C2420] transition-all">
+                  <Send size={16} />
+                </a>
+             </div>
+          </div>
+
+          <div className="flex gap-16 font-sans-std text-sm text-white/60">
+             <div className="flex flex-col gap-4">
+                <span className="text-white uppercase tracking-widest text-xs mb-2">Menu</span>
+                <a href="#vision" className="hover:text-[#B89E80]">Vision</a>
+                <a href="#investment" className="hover:text-[#B89E80]">Investment</a>
+                <a href="#portfolio" className="hover:text-[#B89E80]">Portfolio</a>
+                <a href="#members" className="hover:text-[#B89E80]">Members</a>
+             </div>
+             <div className="flex flex-col gap-4">
+                <span className="text-white uppercase tracking-widest text-xs mb-2">Legal</span>
+                <a href="#" className="hover:text-[#B89E80]">Terms</a>
+                <a href="#" className="hover:text-[#B89E80]">Privacy</a>
+                <a href="#" className="hover:text-[#B89E80]">Risk</a>
+             </div>
+          </div>
+        </div>
+
+        <div className="max-w-6xl mx-auto mt-24 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-white/20 font-sans-std">
+           <p>© 2025 TraditioNova DAO. All rights reserved.</p>
+           <p>Producer: LKJ</p>
+        </div>
+      </footer>
+
+      <style>{`
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+      `}</style>
+    </div>
+  );
+};
+
+export default TraditioNova;
