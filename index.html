@@ -11,7 +11,7 @@
     <!-- 2. 引入 Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Noto+Serif+SC:wght@300;400;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Noto+Serif+SC:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <!-- 3. 引入图标库 -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -23,16 +23,22 @@
                 extend: {
                     colors: {
                         tn: {
-                            bg: '#FDFBF7',
-                            text: '#2C2420',
-                            gold: '#B89E80',
-                            dark: '#1A1817'
+                            bg: '#FDFBF7',      /* 宣纸白 */
+                            text: '#2C2420',    /* 徽墨 */
+                            gold: '#B89E80',    /* 流金 */
+                            fire: '#D64F38',    /* 丹砂红 (保留设计元素) */
+                            ember: '#F59E0B',   /* 琥珀色 */
+                            dark: '#1A1817'     /* 深邃 */
                         }
                     },
                     fontFamily: {
                         'serif-en': ['Cinzel', 'serif'],
                         'serif-cn': ['Noto Serif SC', 'serif'],
                         'sans-std': ['Inter', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'gradient-fire': 'linear-gradient(135deg, #B89E80 0%, #D64F38 100%)',
+                        'gradient-glow': 'radial-gradient(circle at center, rgba(214, 79, 56, 0.15) 0%, rgba(253, 251, 247, 0) 70%)',
                     }
                 }
             }
@@ -43,13 +49,13 @@
         /* 自定义滚动条 */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #FDFBF7; }
-        ::-webkit-scrollbar-thumb { background: #D4C5B0; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb { background: #D64F38; border-radius: 3px; }
         
         /* 简单的淡入动画 */
         .fade-in-up {
-            animation: fadeInUp 1s forwards;
+            animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(30px);
         }
         @keyframes fadeInUp {
             to { opacity: 1; transform: translateY(0); }
@@ -57,12 +63,34 @@
         
         /* 背景噪点纹理 */
         .bg-grain {
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
             pointer-events: none;
+        }
+
+        /* 文字渐变类 */
+        .text-gradient {
+            background: linear-gradient(135deg, #2C2420 30%, #D64F38 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .text-gradient-gold-fire {
+            background: linear-gradient(135deg, #B89E80 0%, #D64F38 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 呼吸光晕动画 */
+        @keyframes pulse-warm {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+        .animate-pulse-warm {
+            animation: pulse-warm 4s ease-in-out infinite;
         }
     </style>
 </head>
-<body class="bg-tn-bg text-tn-text font-sans-std selection:bg-tn-gold selection:text-white overflow-x-hidden">
+<body class="bg-tn-bg text-tn-text font-sans-std selection:bg-tn-fire selection:text-white overflow-x-hidden">
 
     <!-- 背景噪点 -->
     <div class="fixed inset-0 bg-grain z-50 mix-blend-multiply pointer-events-none"></div>
@@ -70,91 +98,96 @@
     <!-- 导航栏 -->
     <nav id="navbar" class="fixed top-0 w-full z-40 px-6 md:px-12 py-6 flex justify-between items-center transition-all duration-500 bg-transparent">
         <div class="flex items-center gap-3">
-            <div class="w-8 h-8 border border-tn-text rotate-45 flex items-center justify-center">
-                <span class="font-serif-en text-xs -rotate-45">TN</span>
+            <div class="w-8 h-8 border border-tn-text rotate-45 flex items-center justify-center group hover:border-tn-fire transition-colors duration-300">
+                <span class="font-serif-en text-xs -rotate-45 group-hover:text-tn-fire transition-colors">TN</span>
             </div>
-            <span class="font-serif-en tracking-widest text-sm md:text-base font-medium">TRADITIONOVA</span>
+            <span class="font-serif-en tracking-widest text-sm md:text-base font-bold">TRADITIONOVA</span>
         </div>
         
-        <div class="hidden md:flex gap-8 text-xs tracking-[0.2em] text-tn-text/60">
-            <button onclick="scrollToId('vision')" class="hover:text-tn-gold transition-colors relative group">VISION</button>
-            <button onclick="scrollToId('investment')" class="hover:text-tn-gold transition-colors relative group">INVESTMENT</button>
-            <button onclick="scrollToId('portfolio')" class="hover:text-tn-gold transition-colors relative group">PORTFOLIO</button>
-            <button onclick="scrollToId('dao')" class="hover:text-tn-gold transition-colors relative group">DAO</button>
-            <button onclick="scrollToId('members')" class="hover:text-tn-gold transition-colors relative group">MEMBERS</button>
+        <div class="hidden md:flex gap-8 text-xs tracking-[0.2em] font-medium text-tn-text/70">
+            <button onclick="scrollToId('vision')" class="hover:text-tn-fire transition-colors relative group py-2">VISION</button>
+            <button onclick="scrollToId('investment')" class="hover:text-tn-fire transition-colors relative group py-2">INVESTMENT</button>
+            <button onclick="scrollToId('portfolio')" class="hover:text-tn-fire transition-colors relative group py-2">PORTFOLIO</button>
+            <button onclick="scrollToId('dao')" class="hover:text-tn-fire transition-colors relative group py-2">DAO</button>
+            <button onclick="scrollToId('members')" class="hover:text-tn-fire transition-colors relative group py-2">MEMBERS</button>
         </div>
 
-        <button class="px-6 py-2 border border-tn-text text-xs tracking-widest hover:bg-tn-text hover:text-tn-bg transition-all duration-300">
+        <button class="px-6 py-2 bg-tn-text text-tn-bg text-xs tracking-widest hover:bg-tn-fire transition-colors duration-300 font-medium">
             JOIN DAO
         </button>
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative min-h-screen flex flex-col justify-center px-6 md:px-12 pt-20">
-        <div class="absolute top-0 right-12 h-screen w-[1px] bg-tn-text/5 hidden md:block"></div>
-        <div class="absolute top-0 left-12 h-screen w-[1px] bg-tn-text/5 hidden md:block"></div>
+    <section class="relative min-h-screen flex flex-col justify-center px-6 md:px-12 pt-20 overflow-hidden">
+        <!-- 装饰线 -->
+        <div class="absolute top-0 right-12 h-screen w-[1px] bg-gradient-to-b from-tn-text/5 via-tn-fire/20 to-tn-text/5 hidden md:block"></div>
+        <div class="absolute top-0 left-12 h-screen w-[1px] bg-gradient-to-b from-tn-text/5 via-tn-fire/20 to-tn-text/5 hidden md:block"></div>
         
+        <!-- 背景暖光 (Fire Glow) -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-glow opacity-60 pointer-events-none"></div>
+
         <div class="max-w-6xl mx-auto w-full relative z-10">
-            <div class="mb-4 flex items-center gap-4 fade-in-up" style="animation-delay: 0.2s">
-                <span class="h-[1px] w-12 bg-tn-gold"></span>
-                <span class="text-xs tracking-[0.2em] text-tn-gold uppercase">Web3 Investment DAO</span>
+            <div class="mb-6 flex items-center gap-4 fade-in-up" style="animation-delay: 0.2s">
+                <span class="h-[2px] w-12 bg-gradient-to-r from-tn-gold to-tn-fire"></span>
+                <span class="text-xs tracking-[0.2em] text-tn-fire font-bold uppercase">Web3 Investment DAO</span>
             </div>
             
-            <h1 class="font-serif-en text-5xl md:text-7xl lg:text-9xl leading-[0.9] text-tn-text mb-8 fade-in-up" style="animation-delay: 0.5s">
+            <h1 class="font-serif-en text-5xl md:text-7xl lg:text-9xl leading-[0.9] text-tn-text mb-8 fade-in-up font-medium" style="animation-delay: 0.5s">
                 Make Every <br/>
-                <span class="italic font-serif-cn text-tn-gold">Investment</span> Count
+                <span class="italic font-serif-cn text-gradient-gold-fire">Investment</span> Count
             </h1>
             
             <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-12 mt-12 fade-in-up" style="animation-delay: 1s">
-                <p class="font-serif-cn text-xl md:text-2xl text-tn-text/80 max-w-lg leading-relaxed">
+                <p class="font-serif-cn text-xl md:text-2xl text-tn-text/90 max-w-lg leading-relaxed border-l-2 border-tn-fire/30 pl-6">
                     每一笔投资，都应该让社会更好。<br/>
-                    <span class="text-sm text-tn-text/40 font-sans-std mt-2 block tracking-wide">For Society. For Future.</span>
+                    <span class="text-sm text-tn-text/50 font-sans-std mt-2 block tracking-wide font-normal">For Society.</span>
                 </p>
                 
                 <div class="flex flex-col gap-2 text-right">
                    <div class="text-xs tracking-widest text-tn-text/40 uppercase mb-2">Producer</div>
-                   <div class="font-serif-en text-lg border-b border-tn-text pb-1">LKJ</div>
+                   <div class="font-serif-en text-lg border-b border-tn-fire pb-1 text-tn-text">LKJ</div>
                 </div>
             </div>
         </div>
 
         <div class="absolute bottom-12 left-1/2 -translate-x-1/2 animate-bounce cursor-pointer" onclick="scrollToId('vision')">
-            <i data-lucide="chevron-down" class="w-5 h-5 text-tn-text/40"></i>
+            <i data-lucide="flame" class="w-5 h-5 text-tn-fire/60"></i>
         </div>
     </section>
 
     <!-- Vision Section -->
     <section id="vision" class="py-32 px-6 md:px-12 bg-tn-text text-tn-bg relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-[500px] h-[500px] border-[40px] border-tn-bg/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+        <!-- 背景火光 -->
+        <div class="absolute bottom-0 right-0 w-[600px] h-[600px] bg-tn-fire/20 rounded-full blur-[100px] translate-y-1/3 translate-x-1/3 animate-pulse-warm"></div>
 
         <div class="max-w-6xl mx-auto relative z-10">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
                 <div>
-                   <h2 class="font-serif-en text-4xl md:text-5xl mb-8">SYMB<br/><span class="text-tn-gold italic">IOSIS</span></h2>
-                   <div class="w-16 h-[1px] bg-tn-bg/20 mb-8"></div>
-                   <p class="font-serif-cn text-lg leading-loose text-tn-bg/80">
+                   <h2 class="font-serif-en text-4xl md:text-5xl mb-8 font-bold">SYMB<br/><span class="text-tn-fire italic">IOSIS</span></h2>
+                   <div class="w-16 h-[2px] bg-gradient-to-r from-tn-fire to-transparent mb-8"></div>
+                   <p class="font-serif-cn text-lg leading-loose text-tn-bg/90">
                      坚持东方文化所代表的“共生”世界观，深入结合 Web3 新工具，成为连接传统价值与创新资本的投资 DAO。共建、投资并赋能善能企业，最终推动人类文明向前发展，生生不息。
                    </p>
                 </div>
                 
                 <div class="grid grid-cols-2 gap-4">
-                     <div class="p-8 border border-tn-bg/10 hover:bg-tn-bg/5 transition-colors group">
-                        <div class="font-serif-en text-tn-gold mb-4">01</div>
-                        <h3 class="font-serif-cn text-xl mb-2">东方审美</h3>
+                     <div class="p-8 border border-tn-bg/10 hover:border-tn-fire/50 hover:bg-tn-bg/5 transition-all duration-300 group">
+                        <div class="font-serif-en text-tn-fire mb-4 text-xl">01</div>
+                        <h3 class="font-serif-cn text-xl mb-2 group-hover:text-tn-gold transition-colors">东方审美</h3>
                         <p class="text-xs text-tn-bg/40 uppercase tracking-wide">Oriental Renaissance</p>
                      </div>
-                     <div class="p-8 border border-tn-bg/10 hover:bg-tn-bg/5 transition-colors group">
-                        <div class="font-serif-en text-tn-gold mb-4">02</div>
-                        <h3 class="font-serif-cn text-xl mb-2">Web3 RWA</h3>
+                     <div class="p-8 border border-tn-bg/10 hover:border-tn-fire/50 hover:bg-tn-bg/5 transition-all duration-300 group">
+                        <div class="font-serif-en text-tn-fire mb-4 text-xl">02</div>
+                        <h3 class="font-serif-cn text-xl mb-2 group-hover:text-tn-gold transition-colors">Web3 RWA</h3>
                         <p class="text-xs text-tn-bg/40 uppercase tracking-wide">Asset Digitization</p>
                      </div>
-                     <div class="p-8 border border-tn-bg/10 hover:bg-tn-bg/5 transition-colors group">
-                        <div class="font-serif-en text-tn-gold mb-4">03</div>
-                        <h3 class="font-serif-cn text-xl mb-2">善能企业</h3>
+                     <div class="p-8 border border-tn-bg/10 hover:border-tn-fire/50 hover:bg-tn-bg/5 transition-all duration-300 group">
+                        <div class="font-serif-en text-tn-fire mb-4 text-xl">03</div>
+                        <h3 class="font-serif-cn text-xl mb-2 group-hover:text-tn-gold transition-colors">善能企业</h3>
                         <p class="text-xs text-tn-bg/40 uppercase tracking-wide">Good Energy Ent.</p>
                      </div>
-                   <div class="p-8 bg-tn-gold text-tn-text flex items-center justify-center">
-                      <span class="font-serif-en text-4xl rotate-90 md:rotate-0">TN</span>
+                   <div class="p-8 bg-gradient-to-br from-tn-gold to-tn-fire text-tn-text flex items-center justify-center shadow-lg shadow-tn-fire/20">
+                      <span class="font-serif-en text-4xl font-bold rotate-90 md:rotate-0 text-white">TN</span>
                    </div>
                 </div>
             </div>
@@ -165,78 +198,85 @@
     <section id="investment" class="py-32 px-6 md:px-12 relative">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-24">
-                <span class="text-xs tracking-[0.3em] uppercase text-tn-gold mb-4 block">Our Focus</span>
+                <span class="text-xs tracking-[0.3em] uppercase text-tn-fire mb-4 block font-bold">Our Focus</span>
                 <h2 class="font-serif-cn text-4xl md:text-5xl text-tn-text">议题驱动 · 善能投资</h2>
             </div>
 
             <!-- Investment Grid -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-tn-text/10 border border-tn-text/10">
-                <!-- Items will be injected by JS or just hardcoded for simplicity. Hardcoding for absolute stability. -->
-                
                 <!-- Item 1 -->
-                <div class="bg-tn-bg p-10 hover:bg-[#F6F1EB] transition-colors group cursor-pointer relative overflow-hidden">
+                <div class="bg-tn-bg p-10 hover:bg-white transition-all duration-300 group cursor-pointer relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-tn-fire transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
                     <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-2 group-hover:translate-x-0">
-                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-tn-gold"></i>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-tn-fire"></i>
                     </div>
-                    <div class="text-tn-text/40 mb-6 group-hover:text-tn-gold transition-colors"><i data-lucide="mountain" class="w-6 h-6"></i></div>
-                    <h3 class="font-serif-cn text-xl font-medium mb-3">文化保护</h3>
+                    <div class="text-tn-text/40 mb-6 group-hover:text-tn-fire transition-colors"><i data-lucide="mountain" class="w-6 h-6"></i></div>
+                    <h3 class="font-serif-cn text-xl font-bold mb-3 text-tn-text">文化保护</h3>
                     <p class="text-sm text-tn-text/60 leading-relaxed mb-6">汉文化传承、敦煌保护、寺院文化</p>
-                    <div class="flex gap-2"><span class="text-[10px] uppercase tracking-wider border border-tn-text/10 px-2 py-1 text-tn-text/40">Heritage</span></div>
+                    <div class="flex gap-2"><span class="text-[10px] uppercase tracking-wider bg-tn-text/5 px-2 py-1 text-tn-text/60 group-hover:bg-tn-fire/10 group-hover:text-tn-fire transition-colors">Heritage</span></div>
                 </div>
 
                 <!-- Item 2 -->
-                <div class="bg-tn-bg p-10 hover:bg-[#F6F1EB] transition-colors group cursor-pointer relative overflow-hidden">
-                    <div class="text-tn-text/40 mb-6 group-hover:text-tn-gold transition-colors"><i data-lucide="layers" class="w-6 h-6"></i></div>
-                    <h3 class="font-serif-cn text-xl font-medium mb-3">城市更新</h3>
+                <div class="bg-tn-bg p-10 hover:bg-white transition-all duration-300 group cursor-pointer relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-tn-fire transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
+                    <div class="text-tn-text/40 mb-6 group-hover:text-tn-fire transition-colors"><i data-lucide="layers" class="w-6 h-6"></i></div>
+                    <h3 class="font-serif-cn text-xl font-bold mb-3 text-tn-text">城市更新</h3>
                     <p class="text-sm text-tn-text/60 leading-relaxed mb-6">文化内容结合的新一代空间解决方案</p>
-                    <div class="flex gap-2"><span class="text-[10px] uppercase tracking-wider border border-tn-text/10 px-2 py-1 text-tn-text/40">Space</span></div>
+                    <div class="flex gap-2"><span class="text-[10px] uppercase tracking-wider bg-tn-text/5 px-2 py-1 text-tn-text/60 group-hover:bg-tn-fire/10 group-hover:text-tn-fire transition-colors">Space</span></div>
                 </div>
 
                 <!-- Item 3 -->
-                <div class="bg-tn-bg p-10 hover:bg-[#F6F1EB] transition-colors group cursor-pointer relative overflow-hidden">
-                    <div class="text-tn-text/40 mb-6 group-hover:text-tn-gold transition-colors"><i data-lucide="leaf" class="w-6 h-6"></i></div>
-                    <h3 class="font-serif-cn text-xl font-medium mb-3">乡村振兴</h3>
+                <div class="bg-tn-bg p-10 hover:bg-white transition-all duration-300 group cursor-pointer relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-tn-fire transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
+                    <div class="text-tn-text/40 mb-6 group-hover:text-tn-fire transition-colors"><i data-lucide="leaf" class="w-6 h-6"></i></div>
+                    <h3 class="font-serif-cn text-xl font-bold mb-3 text-tn-text">乡村振兴</h3>
                     <p class="text-sm text-tn-text/60 leading-relaxed mb-6">在地文化催化中心，农产品+文化模式</p>
-                    <div class="flex gap-2"><span class="text-[10px] uppercase tracking-wider border border-tn-text/10 px-2 py-1 text-tn-text/40">Rural</span></div>
+                    <div class="flex gap-2"><span class="text-[10px] uppercase tracking-wider bg-tn-text/5 px-2 py-1 text-tn-text/60 group-hover:bg-tn-fire/10 group-hover:text-tn-fire transition-colors">Rural</span></div>
                 </div>
 
                 <!-- Item 4 -->
-                <div class="bg-tn-bg p-10 hover:bg-[#F6F1EB] transition-colors group cursor-pointer relative overflow-hidden">
-                    <div class="text-tn-text/40 mb-6 group-hover:text-tn-gold transition-colors"><i data-lucide="hexagon" class="w-6 h-6"></i></div>
-                    <h3 class="font-serif-cn text-xl font-medium mb-3">3D 复原</h3>
+                <div class="bg-tn-bg p-10 hover:bg-white transition-all duration-300 group cursor-pointer relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-tn-fire transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
+                    <div class="text-tn-text/40 mb-6 group-hover:text-tn-fire transition-colors"><i data-lucide="hexagon" class="w-6 h-6"></i></div>
+                    <h3 class="font-serif-cn text-xl font-bold mb-3 text-tn-text">3D 复原</h3>
                     <p class="text-sm text-tn-text/60 leading-relaxed mb-6">馆藏文物数字化，双目视觉芯片</p>
-                    <div class="flex gap-2"><span class="text-[10px] uppercase tracking-wider border border-tn-text/10 px-2 py-1 text-tn-text/40">Tech</span></div>
+                    <div class="flex gap-2"><span class="text-[10px] uppercase tracking-wider bg-tn-text/5 px-2 py-1 text-tn-text/60 group-hover:bg-tn-fire/10 group-hover:text-tn-fire transition-colors">Tech</span></div>
                 </div>
 
                 <!-- Item 5 -->
-                <div class="bg-tn-bg p-10 hover:bg-[#F6F1EB] transition-colors group cursor-pointer relative overflow-hidden">
-                    <div class="text-tn-text/40 mb-6 group-hover:text-tn-gold transition-colors"><i data-lucide="globe" class="w-6 h-6"></i></div>
-                    <h3 class="font-serif-cn text-xl font-medium mb-3">VR 科技</h3>
+                <div class="bg-tn-bg p-10 hover:bg-white transition-all duration-300 group cursor-pointer relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-tn-fire transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
+                    <div class="text-tn-text/40 mb-6 group-hover:text-tn-fire transition-colors"><i data-lucide="globe" class="w-6 h-6"></i></div>
+                    <h3 class="font-serif-cn text-xl font-bold mb-3 text-tn-text">VR 科技</h3>
                     <p class="text-sm text-tn-text/60 leading-relaxed mb-6">文化内容的大空间 VR 落地应用</p>
-                    <div class="flex gap-2"><span class="text-[10px] uppercase tracking-wider border border-tn-text/10 px-2 py-1 text-tn-text/40">Virtual</span></div>
+                    <div class="flex gap-2"><span class="text-[10px] uppercase tracking-wider bg-tn-text/5 px-2 py-1 text-tn-text/60 group-hover:bg-tn-fire/10 group-hover:text-tn-fire transition-colors">Virtual</span></div>
                 </div>
 
                  <!-- Item 6 -->
-                 <div class="bg-tn-bg p-10 hover:bg-[#F6F1EB] transition-colors group cursor-pointer relative overflow-hidden">
-                    <div class="text-tn-text/40 mb-6 group-hover:text-tn-gold transition-colors"><i data-lucide="activity" class="w-6 h-6"></i></div>
-                    <h3 class="font-serif-cn text-xl font-medium mb-3">主动健康</h3>
+                 <div class="bg-tn-bg p-10 hover:bg-white transition-all duration-300 group cursor-pointer relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-tn-fire transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
+                    <div class="text-tn-text/40 mb-6 group-hover:text-tn-fire transition-colors"><i data-lucide="activity" class="w-6 h-6"></i></div>
+                    <h3 class="font-serif-cn text-xl font-bold mb-3 text-tn-text">主动健康</h3>
                     <p class="text-sm text-tn-text/60 leading-relaxed mb-6">全球化主动健康管理平台</p>
-                    <div class="flex gap-2"><span class="text-[10px] uppercase tracking-wider border border-tn-text/10 px-2 py-1 text-tn-text/40">Health</span></div>
+                    <div class="flex gap-2"><span class="text-[10px] uppercase tracking-wider bg-tn-text/5 px-2 py-1 text-tn-text/60 group-hover:bg-tn-fire/10 group-hover:text-tn-fire transition-colors">Health</span></div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Portfolio Section -->
-    <section id="portfolio" class="py-32 px-6 md:px-12 bg-tn-dark text-[#EAE6DF]">
-        <div class="max-w-6xl mx-auto">
+    <section id="portfolio" class="py-32 px-6 md:px-12 bg-tn-dark text-[#EAE6DF] relative">
+        <div class="max-w-6xl mx-auto relative z-10">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-white/10 pb-8">
                 <div>
-                  <div class="text-tn-gold font-serif-en text-sm tracking-widest mb-2">CORE ASSET · CASE 01</div>
-                  <h2 class="font-serif-en text-5xl md:text-6xl mb-2">HUASURGE</h2>
-                  <div class="flex items-center gap-3 text-white/40">
+                  <div class="flex items-center gap-2 mb-2">
+                      <span class="w-2 h-2 rounded-full bg-tn-fire animate-pulse"></span>
+                      <span class="text-tn-fire font-sans-std text-xs tracking-widest font-bold">CORE ASSET · CASE 01</span>
+                  </div>
+                  <h2 class="font-serif-en text-5xl md:text-6xl mb-2 text-white">HUASURGE</h2>
+                  <div class="flex items-center gap-3 text-white/50">
                     <span class="font-serif-cn text-lg">底层资产: 织造司</span>
-                    <span class="h-[1px] w-8 bg-white/20"></span>
+                    <span class="h-[1px] w-8 bg-tn-fire"></span>
                     <span class="font-serif-en text-sm italic">ZHIZAO SI</span>
                   </div>
                 </div>
@@ -248,14 +288,17 @@
 
             <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
                 <!-- Image -->
-                <div class="md:col-span-7 h-[400px] md:h-[600px] relative overflow-hidden group">
-                  <img src="https://images.unsplash.com/photo-1620658826622-4416043d9b4b?q=80&w=2000&auto=format&fit=crop" alt="Oriental Silk" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-80" />
+                <div class="md:col-span-7 h-[400px] md:h-[600px] relative overflow-hidden group border border-white/5">
+                  <img src="https://images.unsplash.com/photo-1620658826622-4416043d9b4b?q=80&w=2000&auto=format&fit=crop" alt="Oriental Silk" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-60 group-hover:opacity-80" />
                   <div class="absolute inset-0 bg-gradient-to-t from-tn-dark via-transparent to-transparent"></div>
+                  
+                  <!-- 霓虹汉字效果 -->
                   <div class="absolute inset-0 flex items-center justify-center">
-                     <span class="font-serif-cn text-4xl text-white/90 drop-shadow-md group-hover:tracking-widest transition-all duration-700">锦 · 绣 · 罗</span>
+                     <span class="font-serif-cn text-5xl text-white/10 drop-shadow-[0_0_15px_rgba(214,79,56,0.3)] group-hover:text-white/30 transition-all duration-700">锦 · 绣 · 罗</span>
                   </div>
-                  <div class="absolute bottom-8 left-8 bg-tn-bg/10 backdrop-blur-md p-6 border border-white/10 max-w-xs">
-                     <p class="font-serif-cn text-sm leading-relaxed text-white/90">致力以当代纺织科技复原华夏千年丝织工艺。</p>
+                  
+                  <div class="absolute bottom-8 left-8 bg-tn-fire/90 backdrop-blur-md p-6 max-w-xs shadow-lg shadow-tn-fire/20">
+                     <p class="font-serif-cn text-sm leading-relaxed text-white font-medium">致力以当代纺织科技复原华夏千年丝织工艺。</p>
                   </div>
                 </div>
 
@@ -266,20 +309,22 @@
                      <p class="text-white/60 text-sm leading-7">汉文化细分赛道头部公司，业务稳定，财务健康。2023年入选福布斯中国新锐品牌 TOP100。<br/>复原云锦工艺，售出50万+条仿妆花马面裙。</p>
                    </div>
                    <div class="space-y-6">
-                     <div class="flex justify-between items-center border-b border-white/10 pb-4">
-                        <span class="text-white/40 text-sm">Web3 轮次释放</span>
-                        <span class="font-serif-en text-xl">2% - 3%</span>
+                     <div class="flex justify-between items-center border-b border-white/10 pb-4 group hover:border-tn-fire transition-colors">
+                        <span class="text-white/40 text-sm group-hover:text-white transition-colors">Web3 轮次释放</span>
+                        <span class="font-serif-en text-xl text-white">2% - 3%</span>
                      </div>
-                     <div class="flex justify-between items-center border-b border-white/10 pb-4">
-                        <span class="text-white/40 text-sm">TGE 估值</span>
-                        <span class="font-serif-en text-xl">$12,000,000</span>
+                     <div class="flex justify-between items-center border-b border-white/10 pb-4 group hover:border-tn-fire transition-colors">
+                        <span class="text-white/40 text-sm group-hover:text-white transition-colors">TGE 估值</span>
+                        <span class="font-serif-en text-xl text-white">$12,000,000</span>
                      </div>
-                     <div class="flex justify-between items-center border-b border-white/10 pb-4">
-                        <span class="text-white/40 text-sm">资产类型</span>
-                        <span class="font-serif-cn text-lg">股权 + RWA NFT</span>
+                     <div class="flex justify-between items-center border-b border-white/10 pb-4 group hover:border-tn-fire transition-colors">
+                        <span class="text-white/40 text-sm group-hover:text-white transition-colors">资产类型</span>
+                        <span class="font-serif-cn text-lg text-white">股权 + RWA NFT</span>
                      </div>
                    </div>
-                   <button class="self-start px-8 py-3 border border-tn-gold text-tn-gold text-xs tracking-[0.2em] hover:bg-tn-gold hover:text-tn-dark transition-all">VIEW INVESTMENT DECK</button>
+                   <button class="self-start px-8 py-3 bg-transparent border border-tn-fire text-tn-fire text-xs tracking-[0.2em] font-bold hover:bg-tn-fire hover:text-white transition-all shadow-[0_0_20px_rgba(214,79,56,0.1)] hover:shadow-[0_0_20px_rgba(214,79,56,0.4)]">
+                       VIEW INVESTMENT DECK
+                   </button>
                 </div>
             </div>
         </div>
@@ -289,42 +334,42 @@
     <section id="dao" class="py-32 px-6 md:px-12 bg-tn-bg">
         <div class="max-w-6xl mx-auto text-center">
             <div class="mb-20">
-                <span class="text-xs tracking-[0.3em] uppercase text-tn-gold mb-4 block">Core Advantages</span>
+                <span class="text-xs tracking-[0.3em] uppercase text-tn-fire mb-4 block font-bold">Core Advantages</span>
                 <h2 class="font-serif-cn text-4xl mb-6 text-tn-text">核心优势</h2>
                 <p class="text-gray-500 max-w-xl mx-auto">链接传统价值与创新资本，构建独一无二的文化投资生态。</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left mb-20">
                 <!-- Advantage 1 -->
-                <div class="p-8 bg-white border border-tn-text/5 hover:border-tn-gold transition-colors group h-full flex flex-col">
-                   <div class="w-10 h-10 bg-tn-bg text-tn-text border border-tn-text/10 flex items-center justify-center mb-6 group-hover:bg-tn-gold group-hover:text-white group-hover:border-transparent transition-colors">
+                <div class="p-8 bg-white border-l-4 border-l-transparent border-t border-r border-b border-gray-100 hover:border-l-tn-fire hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group h-full flex flex-col">
+                   <div class="w-10 h-10 bg-tn-bg text-tn-text border border-tn-text/10 flex items-center justify-center mb-6 group-hover:bg-tn-fire group-hover:text-white group-hover:border-transparent transition-colors">
                      <i data-lucide="sparkles" class="w-5 h-5"></i>
                    </div>
-                   <h3 class="font-serif-cn text-lg mb-4 text-tn-text">议题驱动</h3>
+                   <h3 class="font-serif-cn text-lg mb-4 text-tn-text group-hover:text-tn-fire transition-colors">议题驱动</h3>
                    <p class="text-xs text-gray-500 leading-relaxed">主动发起文物保护、环保等议题，基于“投资向善”的大前提，让每笔投资都推动社会进步。</p>
                 </div>
                 <!-- Advantage 2 -->
-                <div class="p-8 bg-white border border-tn-text/5 hover:border-tn-gold transition-colors group h-full flex flex-col">
-                   <div class="w-10 h-10 bg-tn-bg text-tn-text border border-tn-text/10 flex items-center justify-center mb-6 group-hover:bg-tn-gold group-hover:text-white group-hover:border-transparent transition-colors">
+                <div class="p-8 bg-white border-l-4 border-l-transparent border-t border-r border-b border-gray-100 hover:border-l-tn-fire hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group h-full flex flex-col">
+                   <div class="w-10 h-10 bg-tn-bg text-tn-text border border-tn-text/10 flex items-center justify-center mb-6 group-hover:bg-tn-fire group-hover:text-white group-hover:border-transparent transition-colors">
                      <i data-lucide="anchor" class="w-5 h-5"></i>
                    </div>
-                   <h3 class="font-serif-cn text-lg mb-4 text-tn-text">信息优势</h3>
+                   <h3 class="font-serif-cn text-lg mb-4 text-tn-text group-hover:text-tn-fire transition-colors">信息优势</h3>
                    <p class="text-xs text-gray-500 leading-relaxed">DAO 成员拥有更前沿认知，通过 TraditioNova 掌握产业上下游并购等核心信息优势。</p>
                 </div>
                 <!-- Advantage 3 -->
-                <div class="p-8 bg-white border border-tn-text/5 hover:border-tn-gold transition-colors group h-full flex flex-col">
-                   <div class="w-10 h-10 bg-tn-bg text-tn-text border border-tn-text/10 flex items-center justify-center mb-6 group-hover:bg-tn-gold group-hover:text-white group-hover:border-transparent transition-colors">
+                <div class="p-8 bg-white border-l-4 border-l-transparent border-t border-r border-b border-gray-100 hover:border-l-tn-fire hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group h-full flex flex-col">
+                   <div class="w-10 h-10 bg-tn-bg text-tn-text border border-tn-text/10 flex items-center justify-center mb-6 group-hover:bg-tn-fire group-hover:text-white group-hover:border-transparent transition-colors">
                      <i data-lucide="users" class="w-5 h-5"></i>
                    </div>
-                   <h3 class="font-serif-cn text-lg mb-4 text-tn-text">网络价值</h3>
+                   <h3 class="font-serif-cn text-lg mb-4 text-tn-text group-hover:text-tn-fire transition-colors">网络价值</h3>
                    <p class="text-xs text-gray-500 leading-relaxed">由文化践行者与创新投资者组成的优质网络，链接更多善能企业，共享生态价值。</p>
                 </div>
                 <!-- Advantage 4 -->
-                <div class="p-8 bg-white border border-tn-text/5 hover:border-tn-gold transition-colors group h-full flex flex-col">
-                   <div class="w-10 h-10 bg-tn-bg text-tn-text border border-tn-text/10 flex items-center justify-center mb-6 group-hover:bg-tn-gold group-hover:text-white group-hover:border-transparent transition-colors">
+                <div class="p-8 bg-white border-l-4 border-l-transparent border-t border-r border-b border-gray-100 hover:border-l-tn-fire hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group h-full flex flex-col">
+                   <div class="w-10 h-10 bg-tn-bg text-tn-text border border-tn-text/10 flex items-center justify-center mb-6 group-hover:bg-tn-fire group-hover:text-white group-hover:border-transparent transition-colors">
                      <i data-lucide="shield-check" class="w-5 h-5"></i>
                    </div>
-                   <h3 class="font-serif-cn text-lg mb-4 text-tn-text">门槛优势</h3>
+                   <h3 class="font-serif-cn text-lg mb-4 text-tn-text group-hover:text-tn-fire transition-colors">门槛优势</h3>
                    <p class="text-xs text-gray-500 leading-relaxed">相较于 Web2 传统投资，大幅降低资金门槛，让 Web3 群体深度参与优质实业投资。</p>
                 </div>
             </div>
@@ -336,7 +381,7 @@
         <div class="max-w-6xl mx-auto">
             <div class="flex justify-between items-end mb-12">
                  <h2 class="font-serif-cn text-3xl text-tn-text">DAO 核心成员</h2>
-                 <span class="text-xs tracking-widest text-tn-gold uppercase">CORE CONTRIBUTORS</span>
+                 <span class="text-xs tracking-widest text-tn-fire uppercase font-bold">CORE CONTRIBUTORS</span>
             </div>
             
             <div id="members-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-8 gap-y-12">
@@ -350,34 +395,34 @@
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
             <div class="max-w-sm">
                 <div class="flex items-center gap-3 mb-6">
-                    <div class="w-6 h-6 border border-tn-gold rotate-45 flex items-center justify-center">
-                        <span class="font-serif-en text-[10px] -rotate-45 text-tn-gold">TN</span>
+                    <div class="w-6 h-6 border border-tn-fire rotate-45 flex items-center justify-center">
+                        <span class="font-serif-en text-[10px] -rotate-45 text-tn-fire">TN</span>
                     </div>
-                    <span class="font-serif-en tracking-widest text-sm">TRADITIONOVA</span>
+                    <span class="font-serif-en tracking-widest text-sm font-bold">TRADITIONOVA</span>
                 </div>
                 <p class="font-serif-cn text-sm text-white/60 mb-8">
                     成为连接传统价值与创新资本的投资 DAO。<br/>推动人类文明向前发展，生生不息。
                 </p>
                 <div class="flex gap-4">
-                    <a href="#" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-tn-gold hover:border-tn-gold hover:text-tn-text transition-all"><i data-lucide="twitter" class="w-4 h-4"></i></a>
-                    <a href="#" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-tn-gold hover:border-tn-gold hover:text-tn-text transition-all"><i data-lucide="message-circle" class="w-4 h-4"></i></a>
-                    <a href="#" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-tn-gold hover:border-tn-gold hover:text-tn-text transition-all"><i data-lucide="send" class="w-4 h-4"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-tn-fire hover:border-tn-fire hover:text-white transition-all"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-tn-fire hover:border-tn-fire hover:text-white transition-all"><i data-lucide="message-circle" class="w-4 h-4"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-tn-fire hover:border-tn-fire hover:text-white transition-all"><i data-lucide="send" class="w-4 h-4"></i></a>
                 </div>
             </div>
             
             <div class="flex gap-16 text-sm text-white/60">
                 <div class="flex flex-col gap-4">
-                    <span class="text-white uppercase tracking-widest text-xs mb-2">Menu</span>
-                    <a href="#vision" class="hover:text-tn-gold">Vision</a>
-                    <a href="#investment" class="hover:text-tn-gold">Investment</a>
-                    <a href="#portfolio" class="hover:text-tn-gold">Portfolio</a>
-                    <a href="#members" class="hover:text-tn-gold">Members</a>
+                    <span class="text-white uppercase tracking-widest text-xs mb-2 text-tn-fire font-bold">Menu</span>
+                    <a href="#vision" class="hover:text-tn-fire transition-colors">Vision</a>
+                    <a href="#investment" class="hover:text-tn-fire transition-colors">Investment</a>
+                    <a href="#portfolio" class="hover:text-tn-fire transition-colors">Portfolio</a>
+                    <a href="#members" class="hover:text-tn-fire transition-colors">Members</a>
                 </div>
                 <div class="flex flex-col gap-4">
-                    <span class="text-white uppercase tracking-widest text-xs mb-2">Legal</span>
-                    <a href="#" class="hover:text-tn-gold">Terms</a>
-                    <a href="#" class="hover:text-tn-gold">Privacy</a>
-                    <a href="#" class="hover:text-tn-gold">Risk</a>
+                    <span class="text-white uppercase tracking-widest text-xs mb-2 text-tn-fire font-bold">Legal</span>
+                    <a href="#" class="hover:text-tn-fire transition-colors">Terms</a>
+                    <a href="#" class="hover:text-tn-fire transition-colors">Privacy</a>
+                    <a href="#" class="hover:text-tn-fire transition-colors">Risk</a>
                 </div>
             </div>
         </div>
@@ -420,6 +465,12 @@
             { name: "欧阳", role: "Core Member", twitter: "https://x.com/seanmonkey", handle: "seanmonkey" },
             { name: "慕徊", role: "Core Member", twitter: "https://x.com/Jer_NFTworld", handle: "Jer_NFTworld" },
             { name: "Wang Chao", role: "Core Member", twitter: "https://x.com/chaowxyz", handle: "chaowxyz" },
+            { name: "DOV", role: "Core Member", twitter: "https://x.com/dov_wo", handle: "dov_wo" },
+            { name: "Lolo", role: "Core Member", twitter: "https://x.com/lorrainelolo", handle: "lorrainelolo" },
+            { name: "Lipa", role: "Core Member", twitter: "https://x.com/softlipa1018", handle: "softlipa1018" },
+            { name: "0xSea", role: "Core Member", twitter: "https://x.com/Sea_Bitcoin", handle: "Sea_Bitcoin" },
+            { name: "Hanyang", role: "Core Member", twitter: "https://x.com/HanyangWang", handle: "HanyangWang" },
+            { name: "Nomad", role: "Core Member", twitter: "https://x.com/aurory_bit", handle: "aurory_bit" }
         ];
 
         const membersGrid = document.getElementById('members-grid');
@@ -428,7 +479,7 @@
             const el = document.createElement('div');
             el.className = 'group flex flex-col items-center text-center';
             el.innerHTML = `
-                <div class="w-full aspect-square bg-[#FDFBF7] mb-4 flex items-center justify-center border border-[#2C2420]/5 group-hover:border-[#B89E80] transition-colors overflow-hidden relative">
+                <div class="w-full aspect-square bg-[#FDFBF7] mb-4 flex items-center justify-center border border-[#2C2420]/5 group-hover:border-tn-fire transition-colors overflow-hidden relative">
                     <img 
                        src="https://unavatar.io/twitter/${member.handle}" 
                        alt="${member.name}"
@@ -439,7 +490,7 @@
                         <span class="font-serif-en text-2xl text-[#2C2420]/20">${member.name.charAt(0)}</span>
                     </div>
                 </div>
-                <h4 class="font-serif-cn text-lg text-[#2C2420] mb-1">${member.name}</h4>
+                <h4 class="font-serif-cn text-lg text-[#2C2420] mb-1 group-hover:text-tn-fire transition-colors">${member.name}</h4>
                 <div class="flex flex-col items-center gap-2">
                     <span class="text-[10px] uppercase tracking-wider text-[#2C2420]/40">${member.role}</span>
                     <a href="${member.twitter}" target="_blank" rel="noopener noreferrer" class="text-[#2C2420]/20 hover:text-[#1DA1F2] transition-colors p-2">
